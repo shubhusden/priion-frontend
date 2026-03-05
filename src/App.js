@@ -64,8 +64,8 @@ export default function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: text,
-        }),
+          text: text,
+        });
       });
 
       const data = await res.json();
