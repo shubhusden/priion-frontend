@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, RotateCcw } from "lucide-react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const API = "https://wa-segregator-backend.onrender.com";
+const API = "https://wa-segregator-backend.onrender.com/api";
 
 const COLORS = {
 CRITICAL: "#ff4d4f",
@@ -53,26 +53,35 @@ console.log(err);
 
 const classify = async () => {
 
-  if (!text) return;
+```
+if (!text) return;
 
-  const res = await fetch("https://wa-segregator-backend.onrender.com/api/classify", {
+try {
+
+  const res = await fetch(`${API}/classify`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      sender: sender,
-      text: text
+      message: text
     })
   });
 
   const data = await res.json();
 
   setMessages([data, ...messages]);
+
   loadStats();
 
   setText("");
   setSender("");
+
+} catch (err) {
+  console.error(err);
+}
+```
+
 };
 
 const saveProfile = () => {
@@ -121,7 +130,7 @@ return ( <div style={styles.app}>
 
     {step === "role" && (
       <motion.div key="role" {...anim} style={styles.center}>
-        <h2 style={styles.sectionTitle}>Select Your Role</h2>
+        <h2 style={styles.sectionTitle}>Select Role</h2>
 
         {["Student","Teacher","Business","Corporate"].map((r)=>(
           <button
@@ -190,7 +199,7 @@ return ( <div style={styles.app}>
 
         <div style={styles.cards}>
 
-          {["CRITICAL","IMPORTANT","SPAM"].map((c)=>(
+          {["CRITICAL","IMPORTANT","CASUAL"].map((c)=>(
             <div key={c} style={styles.card}>
               <h3>{c}</h3>
               <h2>{stats[c]||0}</h2>
@@ -218,7 +227,7 @@ return ( <div style={styles.app}>
           />
 
           <button style={styles.btn} onClick={classify}>
-            Classify Message
+            Classify
           </button>
 
         </div>
