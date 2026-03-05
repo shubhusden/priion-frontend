@@ -137,8 +137,8 @@ return ( <div style={styles.app}>
             key={r}
             style={styles.roleBtn}
             onClick={()=>{
-              setRole(r)
-              setStep("profile")
+              setRole(r);
+              setStep("profile");
             }}
           >
             {r}
