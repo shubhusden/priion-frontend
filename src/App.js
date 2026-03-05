@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, RotateCcw } from "lucide-react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
-const API = "https://wa-segregator-backend.onrender.com/api";
+const API = "https://wa-segregator-backend.onrender.com";
 
 const COLORS = {
 CRITICAL: "#ff4d4f",
@@ -53,26 +53,26 @@ console.log(err);
 
 const classify = async () => {
 
-```
-if (!text) return;
+  if (!text) return;
 
-const res = await fetch(`${API}/classify`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ sender, text })
-});
+  const res = await fetch("https://wa-segregator-backend.onrender.com/api/classify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      sender: sender,
+      text: text
+    })
+  });
 
-const data = await res.json();
+  const data = await res.json();
 
-setMessages([data, ...messages]);
-loadStats();
+  setMessages([data, ...messages]);
+  loadStats();
 
-setText("");
-setSender("");
-```
-
+  setText("");
+  setSender("");
 };
 
 const saveProfile = () => {
