@@ -53,32 +53,38 @@ export default function App() {
   };
 
   const classify = async () => {
-    if (!text) {
-      return;
-    }
 
-    try {
-      const res = await fetch(`${API}/classify`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: text,
-        }),
-      });
+  if (!text) {
+    return;
+  }
 
-      const data = await res.json();
+  try {
 
-      setMessages([data, ...messages]);
-      loadStats();
+    const res = await fetch(`${API}/messages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: text,
+        sender: sender
+      })
+    });
 
-      setText("");
-      setSender("");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    const data = await res.json();
+
+    setMessages([data, ...messages]);
+
+    loadStats();
+
+    setText("");
+    setSender("");
+
+  } catch (err) {
+    console.error(err);
+  }
+
+};
 
   const saveProfile = () => {
     const data = { name, phone, role };
