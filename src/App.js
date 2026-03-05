@@ -64,7 +64,7 @@ export default function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text: text,
+          text: text
         });
       });
 
